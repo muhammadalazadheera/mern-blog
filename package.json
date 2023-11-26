@@ -1,0 +1,33 @@
+{
+  "name": "blog-apis",
+  "version": "1.0.0",
+  "description": "APIs for blog website. APIs are created with node.js and express.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "serve": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhammadalazadheera/mern-blog.git"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "author": "AL Azad Heera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muhammadalazadheera/mern-blog/issues"
+  },
+  "homepage": "https://github.com/muhammadalazadheera/mern-blog#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
