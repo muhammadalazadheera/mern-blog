@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler');
 const Posts = require('../models/postModel');
+const User = require('../models/userModel');
 
 // @DESC    GET ALL POSTS
 // @ROUTE   GET api/posts
 // @ACCESS  PRIVATE 
 
 const getPosts = asyncHandler(async(req, res) => {
-    const posts = await Posts.find();
+    const posts = await Posts.find({user: req.user.id});
     res.status(200).json(posts);
 });
 
@@ -30,6 +31,7 @@ const createPost = asyncHandler(async(req, res) => {
     }
 
     const post = await Posts.create({
+        user: req.user.id,
         title: req.body.title
     })
 
@@ -47,6 +49,17 @@ const updatePost = asyncHandler(async (req, res) => {
         throw new Error('Post not found');
     }
 
+    const user = await User.findById(req.body.id);
+    if(!user){
+        res.status(401);
+        throw new Error('User not found');
+    }
+
+    if(post.user.toString() !== user.id){
+        res.status(401);
+        throw new Error('User is not authorized');
+    }
+
     const updatedPost = await Posts.findByIdAndUpdate(req.params.id, req.body, {new: true});
 
     res.status(200).json(updatedPost);
@@ -61,6 +74,17 @@ const deletePost = asyncHandler(async (req, res) => {
     if(!post){
         res.status(400);
         throw new Error('Post not found');
+    }
+
+    const user = await User.findById(req.user.id);
+    if(!user){
+        res.status(401);
+        throw new Error('User not found');
+    }
+
+    if(post.user.toString() !== user.id){
+        res.status(401);
+        throw new Error('User is not authorized');
     }
 
     await post.deleteOne();

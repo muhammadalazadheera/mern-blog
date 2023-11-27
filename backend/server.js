@@ -11,7 +11,9 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
+// Routes
 app.use('/api', require('./routes/postRoutes'));
+app.use('/api/user', require('./routes/userRoutes'));
 
 // Importing Middleware [MUST INCLUE UNDER ROUTES]
 app.use(errorHandler)
